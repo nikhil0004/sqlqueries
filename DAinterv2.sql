@@ -21,4 +21,4 @@ select * from Activity
 --write sql query to fing average processing time by each machine
 with cte as(
 select * ,lead(timestamp)over (partition by machine_id ,process_id order by machine_id,process_id) as leadtimestamp from Activity )
-select machine_id,avg(leadtimestamp) as average_machinetime from cte where activity_type='start' group by machine_id,process_id
+select machine_id,avg(leadtimestamp-timestamp) as average_machinetime from cte where activity_type='start' group by machine_id
